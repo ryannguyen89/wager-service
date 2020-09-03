@@ -1,0 +1,151 @@
+swagger: '2.0'
+info:
+  title: Wager service APIs
+  description: APIs for a wager system
+  version: 1.0.0
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+basePath: /
+schemes:
+  - https
+paths:
+  /wagers:
+    get:
+      tags:
+        - Wager
+      description: List wagers
+      operationId: ListWagersGet
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          required: true
+        - in: query
+          name: limit
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Wager'
+    post:
+      tags:
+        - Wager
+      description: Create a wager
+      operationId: CreateWagerPost
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body for sending message
+          required: true
+          schema:
+            $ref: '#/definitions/CreateWageRequest'
+      responses:
+        '201':
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/Wager'
+  /buy/{wager_id}:
+    post:
+      tags:
+        - Wager
+      description: Buy wager
+      operationId: BuyWagersPost
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: wager_id
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: body for sending message
+          required: true
+          schema:
+            $ref: '#/definitions/BuyWageRequest'
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WagePurchase'
+definitions:
+  CreateWageRequest:
+    type: object
+    properties:
+      total_wager_value:
+        type: integer
+        format: uint64
+      odds:
+        type: integer
+        format: uint32
+      selling_percentage:
+        type: integer
+      selling_price:
+        type: number
+        format: float
+  Wager:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      total_wager_value:
+        type: integer
+        format: uint64
+      odds:
+        type: integer
+        format: uint32
+      selling_percentage:
+        type: integer
+      selling_price:
+        type: number
+        format: float
+      current_selling_price:
+        type: number
+        format: float
+      percentage_sold:
+        type: integer
+      amount_sold:
+        type: number
+        format: double
+      placed_at:
+        type: integer
+        format: int64
+  BuyWageRequest:
+    type: object
+    properties:
+      buying_price:
+        type: number
+        format: float
+  WagePurchase:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      wager_id:
+        type: integer
+        format: int64
+      buying_price:
+        type: number
+        format: float
+      bought_at:
+        type: integer
+        format: int64
+tags:
+  - name: Wager
+    description: wager system

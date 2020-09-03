@@ -1,0 +1,177 @@
+openapi: 3.0.1
+info:
+  contact: {}
+  description: APIs for a wager system
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Wager service APIs
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- description: wager system
+  name: Wager
+paths:
+  /wagers:
+    get:
+      description: List wagers
+      operationId: ListWagersGet
+      parameters:
+      - in: query
+        name: page
+        required: true
+        schema:
+          type: integer
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Wager'
+                type: array
+          description: OK
+      tags:
+      - Wager
+    post:
+      description: Create a wager
+      operationId: CreateWagerPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWageRequest'
+        description: body for sending message
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wager'
+          description: OK
+      tags:
+      - Wager
+      x-codegen-request-body-name: body
+  /buy/{wager_id}:
+    post:
+      description: Buy wager
+      operationId: BuyWagersPost
+      parameters:
+      - in: path
+        name: wager_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/BuyWageRequest'
+        description: body for sending message
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WagePurchase'
+                type: array
+          description: OK
+      tags:
+      - Wager
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    CreateWageRequest:
+      example:
+        selling_price: 5.962134
+        total_wager_value: 0
+        odds: 6
+        selling_percentage: 1
+      properties:
+        total_wager_value:
+          format: uint64
+          type: integer
+        odds:
+          format: uint32
+          type: integer
+        selling_percentage:
+          type: integer
+        selling_price:
+          format: float
+          type: number
+      type: object
+    Wager:
+      example:
+        selling_price: 5.637377
+        total_wager_value: 6
+        odds: 1
+        selling_percentage: 5
+        amount_sold: 9.301444243932576
+        id: 0
+        placed_at: 3
+        percentage_sold: 7
+        current_selling_price: 2.302136
+      properties:
+        id:
+          format: int64
+          type: integer
+        total_wager_value:
+          format: uint64
+          type: integer
+        odds:
+          format: uint32
+          type: integer
+        selling_percentage:
+          type: integer
+        selling_price:
+          format: float
+          type: number
+        current_selling_price:
+          format: float
+          type: number
+        percentage_sold:
+          type: integer
+        amount_sold:
+          format: double
+          type: number
+        placed_at:
+          format: int64
+          type: integer
+      type: object
+    BuyWageRequest:
+      example:
+        buying_price: 0.8008282
+      properties:
+        buying_price:
+          format: float
+          type: number
+      type: object
+    WagePurchase:
+      example:
+        wager_id: 6
+        bought_at: 5
+        buying_price: 1.4658129
+        id: 0
+      properties:
+        id:
+          format: int64
+          type: integer
+        wager_id:
+          format: int64
+          type: integer
+        buying_price:
+          format: float
+          type: number
+        bought_at:
+          format: int64
+          type: integer
+      type: object
