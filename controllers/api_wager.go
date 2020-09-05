@@ -20,11 +20,6 @@ func BuyWagersPost(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-// CreateWagerPost - 
-func CreateWagerPost(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
-}
-
 // ListWagersGet - 
 func ListWagersGet(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})

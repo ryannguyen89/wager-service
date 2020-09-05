@@ -11,11 +11,11 @@ package models
 
 type CreateWagerRequest struct {
 
-	TotalWagerValue int32 `json:"total_wager_value" binding:"required"`
+	TotalWagerValue int32 `json:"total_wager_value"`
 
-	Odds int32 `json:"odds" binding:"required"`
+	Odds int32 `json:"odds"`
 
-	SellingPercentage int32 `json:"selling_percentage" binding:"required"`
+	SellingPercentage int32 `json:"selling_percentage"`
 
-	SellingPrice float32 `json:"selling_price" binding:"required"`
+	SellingPrice float32 `json:"selling_price"`
 }
