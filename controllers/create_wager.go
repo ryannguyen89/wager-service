@@ -2,14 +2,41 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/ryannguyen89/wager-service/business"
 	"github.com/ryannguyen89/wager-service/models"
 	"github.com/ryannguyen89/wager-service/models/errors"
+	"github.com/ryannguyen89/wager-service/utils"
+	"log"
 	"net/http"
 )
 
 // CreateWagerPost -
 func CreateWagerPost(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+	var (
+		req models.CreateWagerRequest
+	)
+
+	if err := c.ShouldBind(&req); err != nil {
+		log.Printf("Bind request error: %v", err)
+		c.JSON(http.StatusBadRequest, models.Error{Error:"Bind request error"})
+		return
+	}
+	log.Printf("Request %v", utils.JsonSerialize(req))
+
+	// Validate request
+	code, msg := validateCreateWagerRequest(&req)
+	if code != http.StatusOK {
+		log.Printf("Validate request error: %s", msg)
+		c.JSON(code, models.Error{Error:msg})
+		return
+	}
+
+	wager, code, msg := business.CreateWager(c.Request.Context(), &req)
+	if code != http.StatusCreated {
+		c.JSON(code, models.Error{Error:msg})
+		return
+	}
+	c.JSON(code, wager)
 }
 
 func validateCreateWagerRequest(r *models.CreateWagerRequest) (code int, message string) {
