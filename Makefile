@@ -17,6 +17,6 @@ run: build
 test:
 	go test
 
-docker:
+docker: build
 	chmod +x entry-point.sh
 	docker build . -t wager
