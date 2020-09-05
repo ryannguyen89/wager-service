@@ -8,3 +8,6 @@ build:
 
 run: build
 	./wager-service
+
+test:
+	go test
