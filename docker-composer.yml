@@ -11,6 +11,8 @@ services:
     links:
       - mysql
     network_mode: "bridge"
+    environment:
+      DB_MIGRATE: "true"
   mysql:
     container_name: mysql.service
     image: mysql/mysql-server:5.7.22

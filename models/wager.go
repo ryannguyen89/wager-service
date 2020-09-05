@@ -24,15 +24,15 @@ type Wager struct {
 
 	SellingPercentage int32 `json:"selling_percentage"`
 
-	SellingPrice float32 `json:"selling_price,omitempty"`
+	SellingPrice float32 `json:"selling_price"`
 
-	CurrentSellingPrice float32 `json:"current_selling_price,omitempty"`
+	CurrentSellingPrice float32 `json:"current_selling_price"`
 
-	PercentageSold int32 `orm:"null" json:"percentage_sold,omitempty"`
+	PercentageSold int32 `orm:"null" json:"percentage_sold"`
 
-	AmountSold float32 `orm:"null" json:"amount_sold,omitempty"`
+	AmountSold float32 `orm:"null" json:"amount_sold"`
 
-	PlacedAt int64 `json:"placed_at,omitempty"`
+	PlacedAt int64 `json:"placed_at"`
 }
 
 func (w *Wager) Create(ctx context.Context) (int64, error) {
