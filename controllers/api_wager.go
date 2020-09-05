@@ -15,11 +15,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// BuyWagersPost - 
-func BuyWagersPost(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
-}
-
 // ListWagersGet - 
 func ListWagersGet(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})

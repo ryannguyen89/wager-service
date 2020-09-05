@@ -93,9 +93,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/WagerPurchase'
-                type: array
+                $ref: '#/components/schemas/WagerPurchase'
           description: OK
         "400":
           content:

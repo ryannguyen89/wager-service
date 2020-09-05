@@ -9,13 +9,26 @@
 
 package models
 
+import (
+	"context"
+	"github.com/astaxie/beego/orm"
+)
+
 type WagerPurchase struct {
 
-	Id int64 `json:"id"`
+	Id int64 `orm:"auto;pk" json:"id"`
 
 	WagerId int64 `json:"wager_id"`
 
 	BuyingPrice float32 `json:"buying_price"`
 
 	BoughtAt int64 `json:"bought_at"`
+}
+
+func (w *WagerPurchase) Create(ctx context.Context) (int64, error) {
+	var (
+		o = orm.NewOrm()
+	)
+
+	return o.Insert(w)
 }

@@ -16,7 +16,7 @@ import (
 
 type Wager struct {
 
-	Id int64 `orm:"auto" json:"id"`
+	Id int64 `orm:"auto;pk" json:"id"`
 
 	TotalWagerValue int32 `json:"total_wager_value"`
 
@@ -30,15 +30,40 @@ type Wager struct {
 
 	PercentageSold int32 `orm:"null" json:"percentage_sold,omitempty"`
 
-	AmountSold float64 `orm:"null" json:"amount_sold,omitempty"`
+	AmountSold float32 `orm:"null" json:"amount_sold,omitempty"`
 
 	PlacedAt int64 `json:"placed_at,omitempty"`
 }
 
-func (w *Wager) Insert(ctx context.Context) (int64, error) {
+func (w *Wager) Create(ctx context.Context) (int64, error) {
 	var (
 		o = orm.NewOrm()
 	)
 
 	return o.Insert(w)
+}
+
+func (w *Wager) Read(ctx context.Context) error {
+	var (
+		o = orm.NewOrm()
+	)
+
+	return o.Read(w)
+}
+
+func (w *Wager) ReadForUpdate(ctx context.Context) error {
+	var (
+		o = orm.NewOrm()
+	)
+
+	return o.ReadForUpdate(w)
+}
+
+func (w *Wager) Update(ctx context.Context) error {
+	var (
+		o = orm.NewOrm()
+	)
+
+	_, err := o.Update(w)
+	return err
 }

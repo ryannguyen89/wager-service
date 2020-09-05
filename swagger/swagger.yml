@@ -88,9 +88,7 @@ paths:
         '201':
           description: 'OK'
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/WagerPurchase'
+            $ref: '#/definitions/WagerPurchase'
         '400':
           description: 'error'
           schema:
