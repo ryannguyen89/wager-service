@@ -36,6 +36,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Wager'
+        '400':
+          description: 'error'
+          schema:
+            $ref: '#/definitions/Error'
     post:
       tags:
         - Wager
@@ -51,12 +55,16 @@ paths:
           description: body for sending message
           required: true
           schema:
-            $ref: '#/definitions/CreateWageRequest'
+            $ref: '#/definitions/CreateWagerRequest'
       responses:
         '201':
           description: 'OK'
           schema:
             $ref: '#/definitions/Wager'
+        '400':
+          description: 'error'
+          schema:
+            $ref: '#/definitions/Error'
   /buy/{wager_id}:
     post:
       tags:
@@ -75,16 +83,20 @@ paths:
           description: body for sending message
           required: true
           schema:
-            $ref: '#/definitions/BuyWageRequest'
+            $ref: '#/definitions/BuyWagerRequest'
       responses:
-        '200':
+        '201':
           description: 'OK'
           schema:
             type: array
             items:
-              $ref: '#/definitions/WagePurchase'
+              $ref: '#/definitions/WagerPurchase'
+        '400':
+          description: 'error'
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
-  CreateWageRequest:
+  CreateWagerRequest:
     type: object
     properties:
       total_wager_value:
@@ -98,6 +110,11 @@ definitions:
       selling_price:
         type: number
         format: float
+    required:
+      - total_wager_value
+      - odds
+      - selling_percentage
+      - selling_price
   Wager:
     type: object
     properties:
@@ -126,13 +143,25 @@ definitions:
       placed_at:
         type: integer
         format: int64
-  BuyWageRequest:
+    required:
+      - id
+      - total_wager_value
+      - odds
+      - selling_percentage
+      - selling_price
+      - current_selling_price
+      - percentage_sold
+      - amount_sold
+      - placed_at
+  BuyWagerRequest:
     type: object
     properties:
       buying_price:
         type: number
         format: float
-  WagePurchase:
+    required:
+      - buying_price
+  WagerPurchase:
     type: object
     properties:
       id:
@@ -147,6 +176,18 @@ definitions:
       bought_at:
         type: integer
         format: int64
+    required:
+      - id
+      - wager_id
+      - buying_price
+      - bought_at
+  Error:
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+      - error
 tags:
   - name: Wager
     description: wager system

@@ -9,9 +9,7 @@
 
 package wager
 
-type Wager struct {
-
-	Id int64 `json:"id"`
+type CreateWagerRequest struct {
 
 	TotalWagerValue int32 `json:"total_wager_value"`
 
@@ -20,12 +18,4 @@ type Wager struct {
 	SellingPercentage int32 `json:"selling_percentage"`
 
 	SellingPrice float32 `json:"selling_price"`
-
-	CurrentSellingPrice float32 `json:"current_selling_price"`
-
-	PercentageSold int32 `json:"percentage_sold"`
-
-	AmountSold float64 `json:"amount_sold"`
-
-	PlacedAt int64 `json:"placed_at"`
 }
