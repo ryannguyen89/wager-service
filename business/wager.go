@@ -112,3 +112,20 @@ func BuyWager(ctx context.Context, wagerId int64, buyingPrice float32) (wPurchas
 	_ = o.Commit()
 	return
 }
+
+func ListWagers(ctx context.Context, req *models.ListWagerRequest) (lWagers []*models.Wager, code int, message string) {
+	var (
+		err error
+	)
+	code = http.StatusInternalServerError
+
+	lWagers, err = models.ListWagers(ctx, req.Page, req.Limit)
+	if err != nil {
+		log.Printf("List wagers error: %v", err)
+		message = err.Error()
+		return
+	}
+
+	code = http.StatusOK
+	return
+}

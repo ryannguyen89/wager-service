@@ -67,3 +67,13 @@ func (w *Wager) Update(ctx context.Context) error {
 	_, err := o.Update(w)
 	return err
 }
+
+func ListWagers(ctx context.Context, page, limit int32) ([]*Wager, error) {
+	var (
+		o = orm.NewOrm()
+		lWager []*Wager
+	)
+
+	_, err := o.QueryTable(new(Wager)).Limit(limit, (page - 1) * limit).All(&lWager)
+	return lWager, err
+}
